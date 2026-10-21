@@ -12,18 +12,18 @@
 :root {
   color-scheme: light; padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom);
   --bg: #f2f5f6; --panel: #ffffff; --panel-2: #e8eef1; --ink: #0f1e27; --ink-2: #445662; --ink-3: #6b7c87;
-  --rule: #d4dee3; --axis: #b2c0c8; --accent: #0d5784; --accent-soft: #dbe9f2; --stage: #184f95; --look: #2a78d6;
+  --rule: #d4dee3; --axis: #b2c0c8; --accent: #0d5784; --accent-soft: #dbe9f2; --stage: #184f95; --look: #2a78d6; --map-bg: #f8fafb; --water: #2a78d6; --veg: #1baf7a; --flood: #eb6834; --both: #5598e7; --bonly: #9a9a9a; --notimg: rgba(128,128,128,.35);
   --cat-minor: rgba(240,132,30,.16); --cat-moderate: rgba(214,58,58,.14); --cat-major: rgba(132,62,168,.15); --cat-text: #5b4a3a;
   --display: 'Archivo', 'Arial Narrow', system-ui, sans-serif; --body: 'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace; --radius: 6px;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme='light']) {
   --bg: #0c1215; --panel: #131b20; --panel-2: #1a242a; --ink: #e5ecf0; --ink-2: #a6b5be; --ink-3: #7f8f99; --rule: #233038; --axis: #374651;
-  --accent: #6db4e5; --accent-soft: #15303f; --stage: #6da7ec; --look: #5598e7;
+  --accent: #6db4e5; --accent-soft: #15303f; --stage: #6da7ec; --look: #5598e7; --map-bg: #10181d; --notimg: rgba(150,150,150,.30);
   --cat-minor: rgba(240,132,30,.2); --cat-moderate: rgba(230,80,80,.2); --cat-major: rgba(160,100,205,.22); --cat-text: #d9c8b4; color-scheme: dark; } }
 :root[data-theme='dark'] {
   --bg: #0c1215; --panel: #131b20; --panel-2: #1a242a; --ink: #e5ecf0; --ink-2: #a6b5be; --ink-3: #7f8f99; --rule: #233038; --axis: #374651;
-  --accent: #6db4e5; --accent-soft: #15303f; --stage: #6da7ec; --look: #5598e7;
+  --accent: #6db4e5; --accent-soft: #15303f; --stage: #6da7ec; --look: #5598e7; --map-bg: #10181d; --notimg: rgba(150,150,150,.30);
   --cat-minor: rgba(240,132,30,.2); --cat-moderate: rgba(230,80,80,.2); --cat-major: rgba(160,100,205,.22); --cat-text: #d9c8b4; color-scheme: dark; }
 * { box-sizing: border-box; }
 img { max-width: 100%; }
@@ -70,6 +70,31 @@ section { padding-block: 44px 8px; display: grid; gap: 20px; scroll-margin-top: 
 .tip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; padding: 6px 9px; font-size: 13px; box-shadow: 0 2px 8px rgba(0,0,0,.12); white-space: nowrap; }
 .tip b { display: block; font-size: 15px; color: var(--ink); }
 .tip span { color: var(--ink-2); }
+.maps { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.6fr); gap: 18px; align-items: start; }
+.trip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+figure { margin: 0; display: grid; gap: 6px; min-width: 0; }
+figcaption { font-size: 13px; color: var(--ink-2); }
+figcaption b { color: var(--ink); font-weight: 600; }
+.map { position: relative; width: 100%; max-width: 100%; background: var(--map-bg); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+.map img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.map svg.ov { position: absolute; inset: 0; width: 100%; height: 100%; }
+.map .edge { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-dasharray: 6 4; vector-effect: non-scaling-stroke; }
+.map .box { fill: none; stroke: var(--ink); stroke-width: 1.6; vector-effect: non-scaling-stroke; }
+.mk { position: absolute; transform: translate(-50%, -50%); width: 8px; height: 8px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 2px var(--map-bg); }
+.mk.g { width: 0; height: 0; border-radius: 0; background: transparent; box-shadow: none; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 12px solid var(--ink); transform: translate(-50%, -60%); }
+.ml { position: absolute; font-size: 12px; font-weight: 600; color: var(--ink); white-space: nowrap; line-height: 1.1; text-shadow: 0 0 3px var(--map-bg), 0 0 3px var(--map-bg), 0 0 2px var(--map-bg); }
+.ml.it { font-style: italic; font-weight: 500; color: var(--ink-2); }
+.scale { position: absolute; left: 6%; bottom: 4%; display: grid; gap: 2px; font-size: 11px; color: var(--ink); text-shadow: 0 0 3px var(--map-bg); }
+.scale i { display: block; height: 4px; background: var(--ink); border: 1px solid var(--map-bg); }
+.mhead { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 8px; font-size: 13px; }
+.mhead b { font-weight: 600; }
+.mhead span { color: var(--ink-2); font-family: var(--mono); font-size: 12px; white-space: nowrap; }
+.areas { display: grid; gap: 10px; }
+.arow { display: grid; grid-template-columns: 64px minmax(0, 1fr) 76px; gap: 10px; align-items: center; font-size: 14px; }
+.abar { display: flex; height: 14px; gap: 2px; }
+.abar i { display: block; height: 100%; }
+.abar i:first-child { border-radius: 3px 0 0 3px; } .abar i:last-child { border-radius: 0 3px 3px 0; }
+.arow .num { font-family: var(--mono); font-size: 13px; text-align: right; }
 .cap { font-size: 13px; color: var(--ink-3); margin: 0; }
 .takeaway { border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; font-size: 18px; max-width: 72ch; margin: 0; }
 .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
@@ -101,12 +126,16 @@ footer p { margin: 0; max-width: 110ch; }
 .sel { user-select: all; font-family: var(--mono); color: var(--ink-2); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @media (max-width: 960px) {
+  .maps { grid-template-columns: minmax(0, 1fr); }
   .agenda, .ideas-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .facts, .grid4, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 620px) {
   .agenda, .ideas-grid, .facts, .grid4, .steps, .cards, .qs { grid-template-columns: minmax(0, 1fr); }
   .fact .v { font-size: 28px; }
+  .trip { gap: 6px; }
+  .mhead { flex-direction: column; }
+  .ml { font-size: 11px; }
 }
 </style>
 </head>
@@ -174,6 +203,33 @@ footer p { margin: 0; max-width: 110ch; }
       </div>
       <div class='chart' id='hydro' tabindex='0' role='img' aria-label='Stage at Lock 4 rose from about 10 feet on April 3 to a crest of 48.35 feet on April 7 and fell to about 11 feet by April 11. Radar looks on April 6 just before the crest and on April 13 after the river had returned to normal.'></div>
       <p class='cap'>USGS gage height, 3-hourly, Eastern Daylight Time. NWS flood categories: minor 31 ft, moderate 35 ft, major 40 ft. Hover or use the arrow keys to read values.</p>
+    </div>
+    <div class="maps">
+      <figure>
+        <div class="map" id="map-over" style="aspect-ratio:1220 / 1220"><img alt="Radar water map of the whole tile around Louisville and Frankfort on April 6, 2025" src="assets/apr06_overview.png"></div>
+        <figcaption><b>Apr 6, 7:40 pm EDT · whole radar tile</b> (110 × 110 km). The dashed line is the western edge of the Apr 13 look; everything west of it was not imaged a week later. The box marks the zoomed reach.</figcaption>
+      </figure>
+      <div style="display:grid;gap:10px;min-width:0">
+        <div class="trip">
+          <figure><div class="mhead"><b>Apr 6</b><span>47.97 ft</span></div><div class="map z" style="aspect-ratio:577 / 1000"><img alt="Water on April 6 between Frankfort and Monterey" src="assets/apr06_zoom.png"></div></figure>
+          <figure><div class="mhead"><b>Apr 13</b><span>11.36 ft</span></div><div class="map z" style="aspect-ratio:577 / 1000"><img alt="Water on April 13 in the same reach; the western part was not imaged" src="assets/apr13_zoom.png"></div></figure>
+          <figure><div class="mhead"><b>Change</b><span>Apr 6 → 13</span></div><div class="map z" style="aspect-ratio:577 / 1000"><img alt="Flood water seen only on April 6, in orange" src="assets/apr06_13_change_zoom.png"></div></figure>
+        </div>
+        <div class="legend">
+          <span><i class="sw" style="background:var(--water)"></i>Open water</span>
+          <span><i class="sw" style="background:var(--veg)"></i>Inundated vegetation</span>
+          <span><i class="sw" style="background:var(--flood)"></i>Flood water (Apr 6 only)</span>
+          <span><i class="sw" style="background:var(--both)"></i>Water on both dates</span>
+          <span><i class="sw" style="background:var(--bonly)"></i>Water Apr 13 only</span>
+          <span><i class="sw" style="background:var(--notimg)"></i>Not imaged</span>
+          <span><i class="sw" style="width:0;height:0;border-radius:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:11px solid var(--ink)"></i>Lock 4 gauge</span>
+        </div>
+        <div class="panel" style="padding:14px 16px">
+          <div class="label">Water in the Frankfort–Monterey reach (17 × 30 km), pixels imaged on both dates</div>
+          <div class="areas" id="areas"></div>
+          <p class="cap">Flood water seen only on Apr 6: 5.6 km². On Apr 13, 36% of this reach was not imaged at all.</p>
+        </div>
+      </div>
     </div>
     <p class='takeaway'>One satellite caught this crest by luck and missed the recession. Combining every available satellite with gauges and models fills the gaps, and the same approach applies to the Barren River and Warren County.</p>
   </section>
@@ -321,6 +377,49 @@ footer p { margin: 0; max-width: 110ch; }
     host.onblur = hide;
   }
   draw(); var w0 = host.clientWidth; new ResizeObserver(function () { if (Math.abs(host.clientWidth - w0) > 2) { w0 = host.clientWidth; draw(); } }).observe(host);
+
+  var EDGE = [[0.6531,0.0001],[0.6545,0.0083],[0.6564,0.0165],[0.6578,0.0247],[0.6597,0.0329],[0.6613,0.0411],[0.663,0.0493],[0.6646,0.0575],[0.6649,0.0657],[0.6671,0.0739],[0.6693,0.0821],[0.6723,0.0903],[0.6739,0.0985],[0.6755,0.1067],[0.6772,0.1149],[0.6788,0.1231],[0.6816,0.1313],[0.6829,0.1395],[0.6848,0.1477],[0.6859,0.1559],[0.6876,0.1641],[0.6889,0.1723],[0.6911,0.1805],[0.6925,0.1887],[0.6939,0.1969],[0.6977,0.2051],[0.6993,0.2133],[0.7012,0.2214],[0.7029,0.2296],[0.7045,0.2378],[0.7064,0.246],[0.7083,0.2542],[0.71,0.2624],[0.7111,0.2706],[0.7122,0.2788],[0.7149,0.287],[0.7173,0.2952],[0.719,0.3034],[0.7195,0.3116],[0.7223,0.3198],[0.7242,0.328],[0.7261,0.3362],[0.7275,0.3444],[0.7294,0.3526],[0.7296,0.3608],[0.7316,0.369],[0.7332,0.3772],[0.7351,0.3854],[0.7373,0.3936],[0.7387,0.4018],[0.7414,0.41],[0.7439,0.4182],[0.7452,0.4264],[0.7463,0.4346],[0.7482,0.4428],[0.751,0.451],[0.7526,0.4592],[0.7542,0.4673],[0.7561,0.4755],[0.7564,0.4837],[0.7583,0.4919],[0.7605,0.5001],[0.7622,0.5083],[0.7619,0.5165],[0.7624,0.5247],[0.7649,0.5329],[0.7665,0.5411],[0.7687,0.5493],[0.7701,0.5575],[0.7706,0.5657],[0.7731,0.5739],[0.7745,0.5821],[0.7766,0.5903],[0.7788,0.5985],[0.781,0.6067],[0.7827,0.6149],[0.7835,0.6231],[0.7867,0.6313],[0.787,0.6395],[0.7887,0.6477],[0.7908,0.6559],[0.793,0.6641],[0.7958,0.6723],[0.7969,0.6805],[0.7982,0.6887],[0.8007,0.6969],[0.8023,0.7051],[0.8045,0.7133],[0.8061,0.7214],[0.8078,0.7296],[0.8097,0.7378],[0.8111,0.746],[0.8133,0.7542],[0.8146,0.7624],[0.8157,0.7706],[0.8182,0.7788],[0.8198,0.787],[0.8223,0.7952],[0.8242,0.8034],[0.8247,0.8116],[0.8275,0.8198],[0.8299,0.828],[0.8302,0.8362],[0.8327,0.8444],[0.834,0.8526],[0.8365,0.8608],[0.8381,0.869],[0.8403,0.8772],[0.8419,0.8854],[0.8425,0.8936],[0.8455,0.9018],[0.8474,0.91],[0.849,0.9182],[0.851,0.9264],[0.8515,0.9346],[0.8545,0.9428],[0.8553,0.951],[0.8586,0.9592],[0.8602,0.9673],[0.8622,0.9755],[0.8641,0.9837],[0.8657,0.9919]];
+  function mark(map, pos, cls, label, o) {
+    o = o || {};
+    if (cls) { var m = document.createElement('i'); m.className = 'mk ' + cls; m.style.left = pos[0] * 100 + '%'; m.style.top = pos[1] * 100 + '%'; map.appendChild(m); }
+    if (label) { var s = document.createElement('span'); s.className = 'ml' + (o.it ? ' it' : ''); s.textContent = label; var dx = o.dx || 0.012, dy = o.dy || 0;
+      if (o.left) s.style.right = (100 - (pos[0] - dx) * 100) + '%'; else s.style.left = (pos[0] + dx) * 100 + '%';
+      s.style.top = (pos[1] + dy) * 100 + '%'; s.style.transform = 'translateY(-50%)'; map.appendChild(s); }
+  }
+  function scalebar(map, km, total) {
+    var s = document.createElement('div'); s.className = 'scale'; var b = document.createElement('i'); var t = document.createElement('span'); t.textContent = km + ' km';
+    s.appendChild(b); s.appendChild(t); map.appendChild(s);
+    function fit() { b.style.width = (km / total * map.clientWidth) + 'px'; } fit(); new ResizeObserver(fit).observe(map);
+  }
+  var mo = document.getElementById('map-over');
+  var ov = el('svg', { class: 'ov', viewBox: '0 0 100 100', preserveAspectRatio: 'none', 'aria-hidden': 'true' }, mo);
+  el('polyline', { points: EDGE.map(function (p) { return (p[0] * 100).toFixed(2) + ',' + (p[1] * 100).toFixed(2); }).join(' '), class: 'edge' }, ov);
+  el('rect', { x: 71.04, y: 40.09, width: 15.76, height: 27.32, class: 'box' }, ov);
+  mark(mo, [0.0786, 0.596], 'dot', 'Louisville');
+  mark(mo, [0.5315, 0.1556], 'dot', 'Carrollton');
+  mark(mo, [0.7852, 0.6355], 'g', 'Frankfort', { dx: 0.03, dy: 0.075 });
+  mark(mo, [0.7104, 0.4009 - 0.032], '', 'Zoomed reach', { dx: 0.001, it: true });
+  var ep = EDGE.reduce(function (a, p) { return Math.abs(p[1] - 0.82) < Math.abs(a[1] - 0.82) ? p : a; });
+  mark(mo, ep, '', 'Apr 13 swath edge', { left: true, dx: 0.018, it: true });
+  scalebar(mo, 20, 109.8);
+  document.querySelectorAll('.map.z').forEach(function (mp, i) {
+    mark(mp, [0.4692, 0.8205], 'g', null);
+    mark(mp, [0.4748, 0.8589], '', 'Frankfort', { dx: 0.06, dy: 0.03 });
+    mark(mp, [0.4472, 0.045], '', 'Monterey', { dx: 0.04 });
+    if (i === 0) scalebar(mp, 5, 17.3);
+    if (i === 1) mark(mp, [0.04, 0.5], '', 'Not imaged', { it: true, dx: 0.001 });
+  });
+  document.querySelectorAll('.mk.dot').forEach(function (d) { d.classList.remove('dot'); });
+  var areas = document.getElementById('areas');
+  [['Apr 6', 6.23, 0.33, 6.57], ['Apr 13', 0.99, 0.92, 1.9]].forEach(function (r) {
+    var row = document.createElement('div'); row.className = 'arow';
+    var l = document.createElement('div'); l.textContent = r[0]; row.appendChild(l);
+    var bar = document.createElement('div'); bar.className = 'abar';
+    [[r[1], 'var(--water)', 'Open water'], [r[2], 'var(--veg)', 'Inundated vegetation']].forEach(function (v) { var i = document.createElement('i'); i.style.width = (v[0] / 6.57 * 100) + '%'; i.style.background = v[1]; i.title = v[2] + ': ' + v[0].toFixed(2) + ' km²'; bar.appendChild(i); });
+    row.appendChild(bar);
+    var n = document.createElement('div'); n.className = 'num'; n.textContent = r[3].toFixed(1) + ' km²'; row.appendChild(n);
+    areas.appendChild(row);
+  });
 
   var P = [
     ['climate', 'Future climate projections', 'Downscaled projections of heat, heavy rain and drought for Warren County in the 2040s and 2070s, under several emissions scenarios.', 'Planning; Public works; Emergency management'],
