@@ -4,7 +4,7 @@
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover'>
 <title>Warren County Flood and Climate</title>
-<meta name='description' content='Discussion briefing for Warren County, Kentucky: satellite flood mapping, a future climate assessment, and ideas from City of Austin projects.'>
+<meta name='description' content='Discussion briefing for Warren County, Kentucky: satellite flood mapping, a future climate assessment, and project ideas.'>
 <link rel='preconnect' href='https://fonts.googleapis.com'>
 <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
 <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&display=swap'>
@@ -83,11 +83,9 @@ section { padding-block: 44px 8px; display: grid; gap: 20px; scroll-margin-top: 
 .step { border-top: 3px solid var(--accent); padding-top: 10px; display: grid; gap: 4px; align-content: start; min-width: 0; }
 .step .label { color: var(--accent); }
 .step p { margin: 0; color: var(--ink-2); font-size: 15px; }
-.austin { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.ideas-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .proj { background: var(--panel); border: 1px solid var(--rule); border-radius: var(--radius); padding: 16px; display: grid; gap: 8px; align-content: start; min-width: 0; }
 .proj p { margin: 0; font-size: 14.5px; color: var(--ink-2); }
-.proj .here { color: var(--ink); border-top: 1px dashed var(--rule); padding-top: 8px; }
-.proj .here b { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 2px; }
 .depts { display: flex; flex-wrap: wrap; gap: 4px; }
 .depts span { font-size: 11.5px; padding: 2px 7px; border-radius: 999px; background: var(--panel-2); color: var(--ink-2); }
 .filters { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -103,11 +101,11 @@ footer p { margin: 0; max-width: 110ch; }
 .sel { user-select: all; font-family: var(--mono); color: var(--ink-2); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @media (max-width: 960px) {
-  .agenda, .austin { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .agenda, .ideas-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .facts, .grid4, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 620px) {
-  .agenda, .austin, .facts, .grid4, .steps, .cards, .qs { grid-template-columns: minmax(0, 1fr); }
+  .agenda, .ideas-grid, .facts, .grid4, .steps, .cards, .qs { grid-template-columns: minmax(0, 1fr); }
   .fact .v { font-size: 28px; }
 }
 </style>
@@ -117,7 +115,7 @@ footer p { margin: 0; max-width: 110ch; }
   <header class='mast'>
     <div class='eyebrow'>Discussion briefing · Warren County planning and floodplain management · October 2026</div>
     <h1>Flood and climate intelligence for <span>Warren County</span></h1>
-    <p class='lede'>What radar satellites can show after a flood, what a future climate assessment could tell planners, and ideas from eleven projects with City of Austin departments that could carry over to Bowling Green and Warren County.</p>
+    <p class='lede'>What radar satellites can show after a flood, what a future climate assessment could tell planners, and eleven project ideas for Bowling Green and Warren County.</p>
     <div class='chips'>
       <span class='chip'>Western Kentucky University · DSOC AI Research Lab</span>
       <span class='chip'>Prototype for discussion. Not a forecast.</span>
@@ -130,7 +128,7 @@ footer p { margin: 0; max-width: 110ch; }
       <li><a href='#satellites'>What satellites saw</a></li>
       <li><a href='#floodplain'>Floodplain uses</a></li>
       <li><a href='#climate'>Future climate</a></li>
-      <li><a href='#austin'>Austin projects</a></li>
+      <li><a href='#ideas'>Ideas</a></li>
       <li><a href='#questions'>Questions and next steps</a></li>
     </ul>
   </nav>
@@ -146,7 +144,7 @@ footer p { margin: 0; max-width: 110ch; }
       <li><span class='time'>2:05 · 10 min</span><h3>What satellites caught in 2025</h3><p>The April 2025 crest at Frankfort: radar saw it just before the peak, then missed the next seven days.</p></li>
       <li><span class='time'>2:15 · 10 min</span><h3>Floodplain management uses</h3><p>Substantial-damage reviews, flooding in sinkholes outside mapped floodplains, NFIP and the Community Rating System.</p></li>
       <li><span class='time'>2:25 · 10 min</span><h3>Future climate for Warren County</h3><p>What an assessment would answer: heavy rainfall for stormwater design, heat, drought, and growth areas.</p></li>
-      <li><span class='time'>2:35 · 10 min</span><h3>Ideas from Austin</h3><p>Eleven projects with City of Austin departments, and which ones could fit Warren County.</p></li>
+      <li><span class='time'>2:35 · 10 min</span><h3>Ideas for Warren County</h3><p>Eleven project ideas, from neighborhood heat maps to a 3D model of the Barren River corridor.</p></li>
       <li><span class='time'>2:45 · 15 min</span><h3>Your priorities and next steps</h3><p>Discussion questions, then agree on one concrete first step.</p></li>
     </ol>
   </section>
@@ -207,7 +205,7 @@ footer p { margin: 0; max-width: 110ch; }
     <div class='chead'>
       <div class='label'>Planning horizon: 2040s to 2070s</div>
       <h2>A future climate assessment for Warren County</h2>
-      <p class='sub'>Built on the climate projections we produced for the City of Austin: downscaled climate models translated into numbers planners can use.</p>
+      <p class='sub'>Downscaled climate models translated into numbers planners can use.</p>
     </div>
     <div class='grid4'>
       <div class='cell'><div class='tag'>Rainfall</div><h3>Heavier storms</h3><p>How design-storm rainfall could change, for stormwater standards and detention sizing.</p></div>
@@ -223,20 +221,20 @@ footer p { margin: 0; max-width: 110ch; }
     </div>
   </section>
 
-  <section id='austin'>
+  <section id='ideas'>
     <div class='chead'>
-      <div class='label'>Previous work with UT Austin</div>
-      <h2>Projects with City of Austin departments</h2>
-      <p class='sub'>Each card shows the Austin project and a possible Warren County counterpart.</p>
+      <div class='label'>Projects we could explore together</div>
+      <h2>Ideas for Warren County</h2>
+      <p class='sub'>Eleven ideas grouped by theme. Each lists the kinds of offices it would help most.</p>
     </div>
-    <div class='filters' role='group' aria-label='Filter projects by theme'>
+    <div class='filters' role='group' aria-label='Filter ideas by theme'>
       <button type='button' data-f='all' aria-pressed='true'>All 11</button>
       <button type='button' data-f='climate' aria-pressed='false'>Climate and planning</button>
       <button type='button' data-f='heat' aria-pressed='false'>Heat</button>
       <button type='button' data-f='hazard' aria-pressed='false'>Flood, trees and fire</button>
       <button type='button' data-f='built' aria-pressed='false'>Buildings and digital tools</button>
     </div>
-    <div class='austin' id='projects'></div>
+    <div class='ideas-grid' id='projects'></div>
   </section>
 
   <section id='questions'>
@@ -325,17 +323,17 @@ footer p { margin: 0; max-width: 110ch; }
   draw(); var w0 = host.clientWidth; new ResizeObserver(function () { if (Math.abs(host.clientWidth - w0) > 2) { w0 = host.clientWidth; draw(); } }).observe(host);
 
   var P = [
-    ['climate', 'Climate Projections for the City of Austin', 'Projecting future weather patterns for Austin, calculated and analyzed by a team of climate researchers at the University of Texas at Austin.', 'Climate Action & Resilience', 'A future climate assessment for Warren County: design rainfall, heat days and drought for the 2040s–2070s.'],
-    ['heat', 'Understanding Heat in North Austin', 'Mapping how extreme heat affects residents in Austin’s Eastern Crescent.', 'Public Health; Climate Action & Resilience; Urban Forestry', 'Neighborhood heat maps for Bowling Green from satellite surface temperature and tree canopy.'],
-    ['built', 'Austin Digital Twins', 'A 3D model, or digital twin, of Austin that visualizes weather variables and how they affect infrastructure.', 'Fire; Public Health', 'A 3D model of the Barren River corridor and downtown showing flood depth on buildings and roads.'],
-    ['hazard', 'Climate Atlas for Accountability & Advocacy Strategies', 'Combining community experiences with satellite data to map climate risks and social vulnerability.', 'Public Health; Climate Action & Resilience; Planning', 'Resident flood reports, including sinkhole flooding, combined with satellite maps to show risk and vulnerability.'],
-    ['built', 'Passive Housing Project', 'Analyzing the expected savings and cost effectiveness of Passive House projects.', 'Energy', 'Energy savings and costs of efficient designs for new subdivisions and public buildings.'],
-    ['heat', 'Cool Pavement Pilot Study', 'Piloting reflective pavement to reduce extreme urban heat.', 'Transportation & Public Works', 'Measure surface temperature change from reflective pavement or tree planting on a pilot street or lot.'],
-    ['hazard', 'Forest Health', 'Using satellite and drone data, models and AI to understand the composition and health of Austin’s tree canopy for wildfire and flood risk.', 'Fire; Climate Action & Resilience; Parks & Recreation; Watershed Protection', 'Tree canopy health and its role in reducing runoff along creeks and greenways.'],
-    ['climate', 'Resilient Building Codes', 'Incorporating climate information into building and landscape codes.', 'Energy; Climate Action & Resilience; Public Library; Public Health; Parks & Recreation; Capital Delivery Services', 'Climate information for development standards: freeboard, stormwater design storms and landscaping.'],
-    ['climate', 'Scenario Planning', 'Researching scenario-planning methods to address uncertainties in infrastructure management and community health.', 'Energy; Climate Action & Resilience; Parks & Recreation; Building Services', 'Growth and climate scenarios to stress-test the comprehensive plan and infrastructure.'],
-    ['hazard', 'Wildfire Planning', 'Researching the advantages and benefits of existing forecasts when working with Austin Fire and Emergency Management.', 'Fire', 'How existing flood, heat and fire-weather forecasts can serve local emergency and planning decisions.'],
-    ['heat', 'Community Heat Impacts', 'Researching how cooling corridors affect people’s experience of extreme heat.', 'Climate Action & Resilience; Parks & Recreation; Public Health; Transportation & Public Works', 'Shaded walking and biking routes linking neighborhoods, parks, WKU and downtown.']
+    ['climate', 'Future climate projections', 'Downscaled projections of heat, heavy rain and drought for Warren County in the 2040s and 2070s, under several emissions scenarios.', 'Planning; Public works; Emergency management'],
+    ['heat', 'Neighborhood heat mapping', 'How extreme heat affects residents across Bowling Green, from satellite surface temperature, tree canopy and community input.', 'Public health; Planning; Parks'],
+    ['built', 'Digital twin of the Barren River corridor', 'A 3D model of downtown and the river corridor that shows flood depth and heat on buildings, roads and infrastructure.', 'Planning; Public works; Emergency management'],
+    ['hazard', 'Climate risk and vulnerability atlas', 'Resident experiences, including reports of sinkhole flooding, combined with satellite data to map climate risk and social vulnerability.', 'Planning; Floodplain management; Public health'],
+    ['built', 'Efficient building savings', 'Expected energy savings and cost-effectiveness of high-performance building designs for new subdivisions and public buildings.', 'Planning; Building codes'],
+    ['heat', 'Cool pavement pilot', 'Test reflective pavement on a pilot street or parking lot and measure the change in surface temperature.', 'Public works; Planning'],
+    ['hazard', 'Tree canopy and forest health', 'Satellite, drone and AI mapping of tree canopy composition and health, and its role in reducing runoff along creeks and greenways.', 'Parks; Stormwater; Planning'],
+    ['climate', 'Climate-informed development standards', 'Climate information for building, landscape and stormwater standards, such as freeboard and design storms.', 'Planning; Floodplain management; Public works'],
+    ['climate', 'Scenario planning', 'Growth and climate scenarios to stress-test the comprehensive plan and infrastructure investments under uncertainty.', 'Planning; Public works'],
+    ['hazard', 'Using forecasts in emergency planning', 'How existing flood, heat and fire-weather forecasts can support local emergency and planning decisions.', 'Emergency management; Planning'],
+    ['heat', 'Cooling corridors', 'Shaded walking and biking routes linking neighborhoods, parks, WKU and downtown, and how they change people’s experience of heat.', 'Parks; Public health; Public works']
   ];
   var TH = { climate: 'Climate and planning', heat: 'Heat', hazard: 'Flood, trees and fire', built: 'Buildings and digital tools' };
   var box = document.getElementById('projects');
@@ -345,7 +343,6 @@ footer p { margin: 0; max-width: 110ch; }
     var h = document.createElement('h3'); h.textContent = q[1]; c.appendChild(h);
     var d = document.createElement('p'); d.textContent = q[2]; c.appendChild(d);
     var g = document.createElement('div'); g.className = 'depts'; q[3].split('; ').forEach(function (n) { var s = document.createElement('span'); s.textContent = n; g.appendChild(s); }); c.appendChild(g);
-    var w = document.createElement('p'); w.className = 'here'; var b = document.createElement('b'); b.textContent = 'In Warren County'; w.appendChild(b); w.appendChild(document.createTextNode(q[4])); c.appendChild(w);
     box.appendChild(c);
   });
   document.querySelectorAll('.filters button').forEach(function (btn) {
