@@ -1,6 +1,6 @@
 # Warren County Flood and Climate Briefing
 
-A discussion briefing for Warren County, Kentucky, planning and floodplain management: what radar satellites can show after a flood, what a future climate assessment could tell planners, and eleven project ideas for Warren County.
+A discussion briefing for Warren County, Kentucky, planning and floodplain management: what radar satellites can show after a flood, what a future climate assessment could tell planners, and ten project ideas for Warren County.
 
 **Live page:** https://manmeet3591.github.io/warren-county-flood-climate-briefing/
 
