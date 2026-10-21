@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover'>
+<title>Warren County Flood and Climate</title>
+<meta name='description' content='Discussion briefing for Warren County, Kentucky: satellite flood mapping, a future climate assessment, and ideas from City of Austin projects.'>
+<link rel='preconnect' href='https://fonts.googleapis.com'>
+<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&display=swap'>
+<style>
+:root {
+  color-scheme: light; padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom);
+  --bg: #f2f5f6; --panel: #ffffff; --panel-2: #e8eef1; --ink: #0f1e27; --ink-2: #445662; --ink-3: #6b7c87;
+  --rule: #d4dee3; --axis: #b2c0c8; --accent: #0d5784; --accent-soft: #dbe9f2; --stage: #184f95; --look: #2a78d6;
+  --cat-minor: rgba(240,132,30,.16); --cat-moderate: rgba(214,58,58,.14); --cat-major: rgba(132,62,168,.15); --cat-text: #5b4a3a;
+  --display: 'Archivo', 'Arial Narrow', system-ui, sans-serif; --body: 'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace; --radius: 6px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme='light']) {
+  --bg: #0c1215; --panel: #131b20; --panel-2: #1a242a; --ink: #e5ecf0; --ink-2: #a6b5be; --ink-3: #7f8f99; --rule: #233038; --axis: #374651;
+  --accent: #6db4e5; --accent-soft: #15303f; --stage: #6da7ec; --look: #5598e7;
+  --cat-minor: rgba(240,132,30,.2); --cat-moderate: rgba(230,80,80,.2); --cat-major: rgba(160,100,205,.22); --cat-text: #d9c8b4; color-scheme: dark; } }
+:root[data-theme='dark'] {
+  --bg: #0c1215; --panel: #131b20; --panel-2: #1a242a; --ink: #e5ecf0; --ink-2: #a6b5be; --ink-3: #7f8f99; --rule: #233038; --axis: #374651;
+  --accent: #6db4e5; --accent-soft: #15303f; --stage: #6da7ec; --look: #5598e7;
+  --cat-minor: rgba(240,132,30,.2); --cat-moderate: rgba(230,80,80,.2); --cat-major: rgba(160,100,205,.22); --cat-text: #d9c8b4; color-scheme: dark; }
+* { box-sizing: border-box; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 48px; }
+body::before { content: ''; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.wrap { max-width: 1160px; margin: 0 auto; }
+a { color: var(--accent); }
+h1, h2, h3 { font-family: var(--display); font-stretch: 85%; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h1 { font-size: clamp(34px, 5.2vw, 56px); font-weight: 750; line-height: 1.03; }
+h1 span { color: var(--accent); }
+h2 { font-size: clamp(26px, 3.4vw, 36px); font-weight: 700; line-height: 1.1; }
+h3 { font-size: 18px; font-weight: 650; line-height: 1.25; }
+.eyebrow, .label, .tag { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.mast { padding-block: 40px 22px; display: grid; gap: 14px; border-bottom: 1px solid var(--rule); }
+.lede { font-size: clamp(17px, 2vw, 19px); color: var(--ink-2); max-width: 66ch; margin: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: 13px; padding: 4px 10px; border: 1px solid var(--rule); border-radius: 999px; background: var(--panel); color: var(--ink-2); }
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 10px; border-bottom: 1px solid var(--rule); }
+.nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.nav a { display: block; white-space: nowrap; text-decoration: none; color: var(--ink-2); font-size: 14px; padding: 6px 12px; border-radius: 999px; border: 1px solid transparent; }
+.nav a:hover { background: var(--panel); border-color: var(--rule); color: var(--ink); }
+section { padding-block: 44px 8px; display: grid; gap: 20px; scroll-margin-top: 64px; }
+.chead { display: grid; gap: 8px; max-width: 76ch; }
+.sub { color: var(--ink-2); margin: 0; }
+.panel { background: var(--panel); border: 1px solid var(--rule); border-radius: var(--radius); padding: 18px; display: grid; gap: 12px; min-width: 0; }
+.agenda { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.agenda li { background: var(--panel); border: 1px solid var(--rule); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 4px; align-content: start; min-width: 0; }
+.agenda .time { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+.agenda p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; }
+.fact { background: var(--panel); padding: 14px 16px; display: grid; gap: 4px; align-content: start; min-width: 0; }
+.fact .v { font-family: var(--display); font-stretch: 85%; font-weight: 700; font-size: 32px; line-height: 1; }
+.fact .v small { font-size: 17px; font-weight: 600; color: var(--ink-2); margin-left: 2px; }
+.fact .k { font-size: 14px; color: var(--ink-2); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 12px; height: 12px; border-radius: 2px; display: inline-block; flex: none; }
+.phead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; }
+.chart { position: relative; width: 100%; min-width: 0; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font-family: var(--body); fill: var(--ink-3); font-size: 12px; }
+.tip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; padding: 6px 9px; font-size: 13px; box-shadow: 0 2px 8px rgba(0,0,0,.12); white-space: nowrap; }
+.tip b { display: block; font-size: 15px; color: var(--ink); }
+.tip span { color: var(--ink-2); }
+.cap { font-size: 13px; color: var(--ink-3); margin: 0; }
+.takeaway { border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; font-size: 18px; max-width: 72ch; margin: 0; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: var(--radius); padding: 18px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.card .tag { color: var(--accent); }
+.card p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; }
+.cell { background: var(--panel); padding: 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.cell p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.step { border-top: 3px solid var(--accent); padding-top: 10px; display: grid; gap: 4px; align-content: start; min-width: 0; }
+.step .label { color: var(--accent); }
+.step p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.austin { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.proj { background: var(--panel); border: 1px solid var(--rule); border-radius: var(--radius); padding: 16px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.proj p { margin: 0; font-size: 14.5px; color: var(--ink-2); }
+.proj .here { color: var(--ink); border-top: 1px dashed var(--rule); padding-top: 8px; }
+.proj .here b { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 2px; }
+.depts { display: flex; flex-wrap: wrap; gap: 4px; }
+.depts span { font-size: 11.5px; padding: 2px 7px; border-radius: 999px; background: var(--panel-2); color: var(--ink-2); }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filters button { font: inherit; font-size: 14px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--rule); background: var(--panel); color: var(--ink-2); cursor: pointer; }
+.filters button[aria-pressed='true'] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.qs { counter-reset: q; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; }
+.qs li { counter-increment: q; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 8px; font-size: 17px; }
+.qs li::before { content: counter(q); font-family: var(--mono); font-size: 13px; color: var(--accent); border: 1px solid var(--accent); border-radius: 50%; width: 26px; height: 26px; display: grid; place-items: center; }
+.now { background: var(--accent-soft); border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 6px; }
+.now ul { margin: 0; padding-left: 20px; }
+footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--rule); display: grid; gap: 10px; font-size: 13px; color: var(--ink-3); }
+footer p { margin: 0; max-width: 110ch; }
+.sel { user-select: all; font-family: var(--mono); color: var(--ink-2); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 960px) {
+  .agenda, .austin { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .facts, .grid4, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .agenda, .austin, .facts, .grid4, .steps, .cards, .qs { grid-template-columns: minmax(0, 1fr); }
+  .fact .v { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+<div class='wrap'>
+  <header class='mast'>
+    <div class='eyebrow'>Discussion briefing · Warren County planning and floodplain management · October 2026</div>
+    <h1>Flood and climate intelligence for <span>Warren County</span></h1>
+    <p class='lede'>What radar satellites can show after a flood, what a future climate assessment could tell planners, and ideas from eleven projects with City of Austin departments that could carry over to Bowling Green and Warren County.</p>
+    <div class='chips'>
+      <span class='chip'>Western Kentucky University · DSOC AI Research Lab</span>
+      <span class='chip'>Prototype for discussion. Not a forecast.</span>
+    </div>
+  </header>
+
+  <nav class='nav' aria-label='Sections'>
+    <ul>
+      <li><a href='#agenda'>Agenda</a></li>
+      <li><a href='#satellites'>What satellites saw</a></li>
+      <li><a href='#floodplain'>Floodplain uses</a></li>
+      <li><a href='#climate'>Future climate</a></li>
+      <li><a href='#austin'>Austin projects</a></li>
+      <li><a href='#questions'>Questions and next steps</a></li>
+    </ul>
+  </nav>
+
+  <section id='agenda'>
+    <div class='chead'>
+      <div class='label'>Wednesday, 2:00–3:00 pm</div>
+      <h2>Agenda and talking points</h2>
+      <p class='sub'>Listen first. The goal is to learn how the office uses flood and climate information, then show what we can add.</p>
+    </div>
+    <ol class='agenda'>
+      <li><span class='time'>2:00 · 5 min</span><h3>Introductions and goals</h3><p>Who we are, what we have been building, and what we hope to learn from your office today.</p></li>
+      <li><span class='time'>2:05 · 10 min</span><h3>What satellites caught in 2025</h3><p>The April 2025 crest at Frankfort: radar saw it just before the peak, then missed the next seven days.</p></li>
+      <li><span class='time'>2:15 · 10 min</span><h3>Floodplain management uses</h3><p>Substantial-damage reviews, flooding in sinkholes outside mapped floodplains, NFIP and the Community Rating System.</p></li>
+      <li><span class='time'>2:25 · 10 min</span><h3>Future climate for Warren County</h3><p>What an assessment would answer: heavy rainfall for stormwater design, heat, drought, and growth areas.</p></li>
+      <li><span class='time'>2:35 · 10 min</span><h3>Ideas from Austin</h3><p>Eleven projects with City of Austin departments, and which ones could fit Warren County.</p></li>
+      <li><span class='time'>2:45 · 15 min</span><h3>Your priorities and next steps</h3><p>Discussion questions, then agree on one concrete first step.</p></li>
+    </ol>
+  </section>
+
+  <section id='satellites'>
+    <div class='chead'>
+      <div class='label'>Kentucky River at Lock 4, Frankfort · USGS 03287500</div>
+      <h2>What satellites caught in April 2025</h2>
+      <p class='sub'>We replayed the April 2025 flood with NASA’s OPERA radar water maps. Radar sees through clouds and at night, but a single satellite passes over only every several days.</p>
+    </div>
+    <div class='facts'>
+      <div class='fact'><div class='v'>48.35<small>ft</small></div><div class='k'>Crest at Lock 4 on Apr 7, the second-highest stage on record</div></div>
+      <div class='fact'><div class='v'>9.3<small>h</small></div><div class='k'>The radar looked just before the crest (Apr 6, 7:40 pm EDT)</div></div>
+      <div class='fact'><div class='v'>7<small>days</small></div><div class='k'>Until the next look, which covered only 24% of the area</div></div>
+      <div class='fact'><div class='v'>+1.4<small>h</small></div><div class='k'>The near-crest map was produced after the crest had passed</div></div>
+    </div>
+    <div class='panel'>
+      <div class='phead'>
+        <h3>Stage at Lock 4, April 3–16, 2025</h3>
+        <div class='legend'>
+          <span><i class='sw' style='height:2px;width:16px;background:var(--stage)'></i>Stage</span>
+          <span><i class='sw' style='border-radius:50%;background:var(--look)'></i>Radar look</span>
+          <span><i class='sw' style='background:var(--cat-minor)'></i>Minor</span>
+          <span><i class='sw' style='background:var(--cat-moderate)'></i>Moderate</span>
+          <span><i class='sw' style='background:var(--cat-major)'></i>Major flooding</span>
+        </div>
+      </div>
+      <div class='chart' id='hydro' tabindex='0' role='img' aria-label='Stage at Lock 4 rose from about 10 feet on April 3 to a crest of 48.35 feet on April 7 and fell to about 11 feet by April 11. Radar looks on April 6 just before the crest and on April 13 after the river had returned to normal.'></div>
+      <p class='cap'>USGS gage height, 3-hourly, Eastern Daylight Time. NWS flood categories: minor 31 ft, moderate 35 ft, major 40 ft. Hover or use the arrow keys to read values.</p>
+    </div>
+    <p class='takeaway'>One satellite caught this crest by luck and missed the recession. Combining every available satellite with gauges and models fills the gaps, and the same approach applies to the Barren River and Warren County.</p>
+  </section>
+
+  <section id='floodplain'>
+    <div class='chead'>
+      <div class='label'>Floodplain management</div>
+      <h2>Where better flood maps could help</h2>
+      <p class='sub'>Starting points to test with your staff, not conclusions.</p>
+    </div>
+    <div class='cards'>
+      <div class='card'><div class='tag'>After a flood</div><h3>Substantial-damage reviews</h3><p>Which structures were likely inundated, roughly how deep and for how long, so field reviews can start with the most likely cases.</p></div>
+      <div class='card'><div class='tag'>Karst</div><h3>Flooding outside mapped floodplains</h3><p>Water ponding in sinkholes and closed depressions that the flood maps do not show. Satellite looks plus resident reports can document where it happens and how often.</p></div>
+      <div class='card'><div class='tag'>NFIP</div><h3>Community Rating System</h3><p>A consistent record of each flood’s extent and duration could support flood-data upkeep, outreach and floodplain management planning.</p></div>
+      <div class='card'><div class='tag'>Mapping</div><h3>Where maps may need a second look</h3><p>Repeated flooding observed outside the mapped floodplain is evidence for prioritizing study areas in future map updates.</p></div>
+    </div>
+    <div class='panel'>
+      <h3>What a post-flood map package could include</h3>
+      <div class='grid4'>
+        <div class='cell'><div class='tag'>Where</div><p>Flood extent on a 30 m grid, including water under trees where newer radar allows.</p></div>
+        <div class='cell'><div class='tag'>How deep</div><p>Estimated depth from the water edge and lidar elevation, checked against high-water marks.</p></div>
+        <div class='cell'><div class='tag'>How long</div><p>Duration and recession by area, for inspections and damage reviews.</p></div>
+        <div class='cell'><div class='tag'>How sure</div><p>Confidence and the age of the latest satellite look on every pixel, delivered as GIS layers.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id='climate'>
+    <div class='chead'>
+      <div class='label'>Planning horizon: 2040s to 2070s</div>
+      <h2>A future climate assessment for Warren County</h2>
+      <p class='sub'>Built on the climate projections we produced for the City of Austin: downscaled climate models translated into numbers planners can use.</p>
+    </div>
+    <div class='grid4'>
+      <div class='cell'><div class='tag'>Rainfall</div><h3>Heavier storms</h3><p>How design-storm rainfall could change, for stormwater standards and detention sizing.</p></div>
+      <div class='cell'><div class='tag'>Heat</div><h3>Hot days and nights</h3><p>Days above 95°F and warm nights, for public health, parks and outdoor work.</p></div>
+      <div class='cell'><div class='tag'>Water</div><h3>Drought and low flow</h3><p>Dry spells and their effect on water supply and the Barren River.</p></div>
+      <div class='cell'><div class='tag'>Growth</div><h3>Where to build</h3><p>Combining climate risk with growth areas in the comprehensive plan.</p></div>
+    </div>
+    <div class='steps'>
+      <div class='step'><div class='label'>Step 1</div><h3>Observed record</h3><p>Long-term station records for Bowling Green: what has already changed.</p></div>
+      <div class='step'><div class='label'>Step 2</div><h3>Downscaled projections</h3><p>Many climate models, downscaled to local scale, for several emissions scenarios.</p></div>
+      <div class='step'><div class='label'>Step 3</div><h3>Planning metrics</h3><p>Design rainfall, heat days, drought indices, chosen with your staff.</p></div>
+      <div class='step'><div class='label'>Step 4</div><h3>Briefing and maps</h3><p>A short report, GIS layers and a dashboard like this one.</p></div>
+    </div>
+  </section>
+
+  <section id='austin'>
+    <div class='chead'>
+      <div class='label'>Previous work with UT Austin</div>
+      <h2>Projects with City of Austin departments</h2>
+      <p class='sub'>Each card shows the Austin project and a possible Warren County counterpart.</p>
+    </div>
+    <div class='filters' role='group' aria-label='Filter projects by theme'>
+      <button type='button' data-f='all' aria-pressed='true'>All 11</button>
+      <button type='button' data-f='climate' aria-pressed='false'>Climate and planning</button>
+      <button type='button' data-f='heat' aria-pressed='false'>Heat</button>
+      <button type='button' data-f='hazard' aria-pressed='false'>Flood, trees and fire</button>
+      <button type='button' data-f='built' aria-pressed='false'>Buildings and digital tools</button>
+    </div>
+    <div class='austin' id='projects'></div>
+  </section>
+
+  <section id='questions'>
+    <div class='chead'>
+      <div class='label'>For the conversation</div>
+      <h2>Questions and next steps</h2>
+    </div>
+    <ol class='qs'>
+      <li>After the last flood, how did your office decide which structures needed a substantial-damage review? What took the longest?</li>
+      <li>Where do you see flooding outside mapped floodplains, such as sinkholes and depressions? How are those reports recorded?</li>
+      <li>What would make a post-flood map useful: extent, depth, duration, a list of structures?</li>
+      <li>Which Community Rating System activities or map-update priorities could better flood data support?</li>
+      <li>Which climate questions come up in planning decisions: stormwater design rainfall, growth areas, heat?</li>
+      <li>Which past flood in Warren County should we replay first?</li>
+    </ol>
+    <div class='now'>
+      <h3>Possible first steps</h3>
+      <ul>
+        <li>Pick one past Warren County flood to replay with satellite data.</li>
+        <li>Share flood reports, high-water marks or sinkhole-flooding locations that can check the maps.</li>
+        <li>Scope a short future-climate briefing for Warren County.</li>
+        <li>Name a staff contact for follow-up.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>The April 2025 replay uses NASA/JPL OPERA DSWx-S1 surface water maps (doi:10.5067/OPDSWS1-L3V1), which contain modified Copernicus Sentinel data (2025), USGS gage height for station 03287500, and National Weather Service flood categories. This is a research prototype, not a forecast or warning. For current conditions use the National Weather Service (<a href='https://water.noaa.gov' target='_blank' rel='noopener'>water.noaa.gov</a>) and the USGS (<a href='https://waterdata.usgs.gov' target='_blank' rel='noopener'>waterdata.usgs.gov</a>).</p>
+    <p>Manmeet Singh and M. M. Nabi, Western Kentucky University · <span class='sel'>manmeet.singh@wku.edu</span> · <span class='sel'>mm.nabi@wku.edu</span></p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var S = [[0,10.4],[3,10.7],[6,12.5],[9,12.8],[12,12.9],[15,12.9],[18,13.8],[21,15.2],[24,17.2],[27,20.8],[30,24.2],[33,27.6],[36,29.6],[39,31.1],[42,33.1],[45,34.5],[48,35.6],[51,36.7],[54,37.7],[57,38.7],[60,39.7],[63,40.8],[66,41.6],[69,42.5],[72,43.7],[75,44.9],[78,45.8],[81,46.5],[84,47.0],[87,47.5],[90,47.8],[93,48.1],[96,48.2],[99,48.3],[101,48.4],[102,48.3],[105,48.3],[108,48.3],[111,48.2],[114,48.1],[117,47.9],[120,47.6],[123,47.3],[126,46.9],[129,46.5],[132,46.0],[135,45.5],[138,45.0],[141,44.4],[144,43.7],[147,43.0],[150,42.1],[153,41.2],[156,40.1],[159,38.8],[162,37.3],[165,35.7],[168,34.0],[171,32.0],[174,30.0],[177,27.9],[180,25.8],[183,23.7],[186,21.7],[189,19.7],[192,17.7],[195,15.9],[198,14.3],[201,12.9],[204,11.9],[207,11.4],[210,11.3],[213,11.3],[216,11.4],[219,11.5],[222,11.6],[225,11.7],[228,11.7],[231,11.7],[234,11.7],[237,11.6],[240,11.6],[243,11.6],[246,11.5],[249,11.5],[252,11.5],[255,11.4],[258,11.4],[261,11.3],[264,11.3],[267,11.2],[270,11.2],[273,11.1],[276,11.1],[279,11.0],[282,11.0],[285,10.9],[288,10.9],[291,10.8],[294,10.8],[297,10.7],[300,10.7],[303,10.6],[306,10.6],[309,10.5]];
+  var LOOKS = [{ h: 91.67, label: 'Radar look', sub: 'Apr 6, 7:40 pm · 47.97 ft' }, { h: 259.53, label: 'Next look', sub: 'Apr 13, 7:32 pm · 11.36 ft' }];
+  var CREST = { h: 101, v: 48.35 };
+  var CATS = [{ lo: 31, hi: 35, c: 'var(--cat-minor)', n: 'Minor' }, { lo: 35, hi: 40, c: 'var(--cat-moderate)', n: 'Moderate' }, { lo: 40, hi: 56, c: 'var(--cat-major)', n: 'Major' }];
+  var MON = ['Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12', 'Apr 13', 'Apr 14', 'Apr 15'];
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(t, a, p, txt) { var e = document.createElementNS(NS, t); for (var k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; if (p) p.appendChild(e); return e; }
+  function stageAt(h) { for (var i = 1; i < S.length; i++) if (S[i][0] >= h) { var a = S[i - 1], b = S[i]; return a[1] + (b[1] - a[1]) * (h - a[0]) / (b[0] - a[0]); } return S[S.length - 1][1]; }
+  function when(h) { var d = Math.floor(h / 24), hr = Math.round(h % 24); var ap = hr >= 12 ? 'pm' : 'am', h12 = hr % 12 === 0 ? 12 : hr % 12; return MON[Math.min(d, 12)] + ', ' + h12 + ' ' + ap; }
+  var host = document.getElementById('hydro'), tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true;
+  function draw() {
+    var W = Math.max(280, host.clientWidth), narrow = W < 560, lift = narrow ? 26 : 0, H = 300 + lift;
+    var m = { l: 40, r: 12, t: 40 + lift, b: 26 }, iw = W - m.l - m.r, ih = H - m.t - m.b, X0 = 0, X1 = 312, Y0 = 0, Y1 = 56;
+    var X = function (h) { return m.l + (h - X0) / (X1 - X0) * iw; }, Y = function (v) { return m.t + (1 - (v - Y0) / (Y1 - Y0)) * ih; };
+    host.textContent = '';
+    var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, 'aria-hidden': 'true' }, host);
+    CATS.forEach(function (c) { el('rect', { x: m.l, y: Y(c.hi), width: iw, height: Y(c.lo) - Y(c.hi), style: 'fill:' + c.c }, svg); if (Y(c.lo) - Y(c.hi) > 13) el('text', { x: m.l + iw - 4, y: (Y(c.lo) + Y(c.hi)) / 2 + 4, 'text-anchor': 'end', style: 'fill:var(--cat-text);font-size:11px;font-style:italic' }, svg, c.n); });
+    for (var v = 0; v <= 50; v += 10) { el('line', { x1: m.l, x2: m.l + iw, y1: Y(v), y2: Y(v), style: 'stroke:var(--rule)' }, svg); el('text', { x: m.l - 6, y: Y(v) + 4, 'text-anchor': 'end' }, svg, v === 50 ? '50 ft' : v); }
+    el('line', { x1: m.l, x2: m.l + iw, y1: Y(0), y2: Y(0), style: 'stroke:var(--axis)' }, svg);
+    var step = iw / 13 < 40 ? 2 : 1;
+    for (var d = 0; d <= 13; d++) { var x = X(d * 24); el('line', { x1: x, x2: x, y1: Y(0), y2: Y(0) + 4, style: 'stroke:var(--axis)' }, svg); if (d % step === 0 && d < 13) el('text', { x: x + 2, y: Y(0) + 17 }, svg, MON[d]); }
+    var p = S.map(function (q, i) { return (i ? 'L' : 'M') + X(q[0]).toFixed(1) + ' ' + Y(q[1]).toFixed(1); }).join('');
+    el('path', { d: p + 'L' + X(S[S.length - 1][0]) + ' ' + Y(0) + 'L' + X(0) + ' ' + Y(0) + 'Z', style: 'fill:var(--stage);fill-opacity:.08' }, svg);
+    el('path', { d: p, style: 'fill:none;stroke:var(--stage);stroke-width:2;stroke-linejoin:round' }, svg);
+    LOOKS.forEach(function (L, i) {
+      var x = X(L.h), up = i === 0 ? lift : 0, right = x < m.l + iw * 0.62, tx = right ? x + 5 : x - 5, an = right ? 'start' : 'end';
+      el('line', { x1: x, x2: x, y1: m.t - 6 - up, y2: Y(0), style: 'stroke:var(--ink-2)' }, svg);
+      el('text', { x: tx, y: m.t - 22 - up, 'text-anchor': an, style: 'fill:var(--ink);font-weight:600' }, svg, L.label);
+      el('text', { x: tx, y: m.t - 9 - up, 'text-anchor': an, style: 'font-size:11px;fill:var(--ink-2)' }, svg, L.sub);
+      el('circle', { cx: x, cy: Y(stageAt(L.h)), r: 5.5, style: 'fill:var(--look);stroke:var(--panel);stroke-width:2' }, svg);
+    });
+    var cx = X(CREST.h), cy = Y(CREST.v);
+    el('circle', { cx: cx, cy: cy, r: 4.5, style: 'fill:var(--stage);stroke:var(--panel);stroke-width:2' }, svg);
+    el('text', { x: cx + 8, y: cy - 9, style: 'fill:var(--ink);font-weight:600' }, svg, narrow ? 'Crest 48.35 ft' : 'Crest 48.35 ft · Apr 7, 5 am');
+    var xh = el('line', { y1: m.t, y2: Y(0), style: 'stroke:var(--ink-3)', visibility: 'hidden' }, svg);
+    var xd = el('circle', { r: 4, style: 'fill:var(--stage);stroke:var(--panel);stroke-width:2', visibility: 'hidden' }, svg);
+    var hit = el('rect', { x: m.l, y: m.t - 8, width: iw, height: ih + 8, style: 'fill:transparent;cursor:crosshair' }, svg);
+    host.appendChild(tip);
+    var idx = -1;
+    function show(i) {
+      idx = Math.max(0, Math.min(S.length - 1, i)); var q = S[idx], x = X(q[0]), y = Y(q[1]);
+      xh.setAttribute('x1', x); xh.setAttribute('x2', x); xh.setAttribute('visibility', 'visible'); xd.setAttribute('cx', x); xd.setAttribute('cy', y); xd.setAttribute('visibility', 'visible');
+      tip.innerHTML = ''; var b = document.createElement('b'); b.textContent = q[1].toFixed(1) + ' ft'; var s = document.createElement('span'); s.textContent = when(q[0]) + ' EDT'; tip.appendChild(b); tip.appendChild(s); tip.hidden = false;
+      var k = host.clientWidth / W, left = x * k + 12; if (left + tip.offsetWidth > host.clientWidth) left = x * k - tip.offsetWidth - 12; tip.style.left = Math.max(0, left) + 'px'; tip.style.top = Math.max(0, y * k - 50) + 'px';
+    }
+    function hide() { xh.setAttribute('visibility', 'hidden'); xd.setAttribute('visibility', 'hidden'); tip.hidden = true; }
+    hit.addEventListener('pointermove', function (e) { var r = svg.getBoundingClientRect(), h = ((e.clientX - r.left) * W / r.width - m.l) / iw * (X1 - X0); var best = 0; S.forEach(function (q, i) { if (Math.abs(q[0] - h) < Math.abs(S[best][0] - h)) best = i; }); show(best); });
+    hit.addEventListener('pointerleave', hide);
+    host.onkeydown = function (e) { if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return; e.preventDefault(); show(idx < 0 ? 0 : idx + (e.key === 'ArrowRight' ? 1 : -1)); };
+    host.onblur = hide;
+  }
+  draw(); var w0 = host.clientWidth; new ResizeObserver(function () { if (Math.abs(host.clientWidth - w0) > 2) { w0 = host.clientWidth; draw(); } }).observe(host);
+
+  var P = [
+    ['climate', 'Climate Projections for the City of Austin', 'Projecting future weather patterns for Austin, calculated and analyzed by a team of climate researchers at the University of Texas at Austin.', 'Climate Action & Resilience', 'A future climate assessment for Warren County: design rainfall, heat days and drought for the 2040s–2070s.'],
+    ['heat', 'Understanding Heat in North Austin', 'Mapping how extreme heat affects residents in Austin’s Eastern Crescent.', 'Public Health; Climate Action & Resilience; Urban Forestry', 'Neighborhood heat maps for Bowling Green from satellite surface temperature and tree canopy.'],
+    ['built', 'Austin Digital Twins', 'A 3D model, or digital twin, of Austin that visualizes weather variables and how they affect infrastructure.', 'Fire; Public Health', 'A 3D model of the Barren River corridor and downtown showing flood depth on buildings and roads.'],
+    ['hazard', 'Climate Atlas for Accountability & Advocacy Strategies', 'Combining community experiences with satellite data to map climate risks and social vulnerability.', 'Public Health; Climate Action & Resilience; Planning', 'Resident flood reports, including sinkhole flooding, combined with satellite maps to show risk and vulnerability.'],
+    ['built', 'Passive Housing Project', 'Analyzing the expected savings and cost effectiveness of Passive House projects.', 'Energy', 'Energy savings and costs of efficient designs for new subdivisions and public buildings.'],
+    ['heat', 'Cool Pavement Pilot Study', 'Piloting reflective pavement to reduce extreme urban heat.', 'Transportation & Public Works', 'Measure surface temperature change from reflective pavement or tree planting on a pilot street or lot.'],
+    ['hazard', 'Forest Health', 'Using satellite and drone data, models and AI to understand the composition and health of Austin’s tree canopy for wildfire and flood risk.', 'Fire; Climate Action & Resilience; Parks & Recreation; Watershed Protection', 'Tree canopy health and its role in reducing runoff along creeks and greenways.'],
+    ['climate', 'Resilient Building Codes', 'Incorporating climate information into building and landscape codes.', 'Energy; Climate Action & Resilience; Public Library; Public Health; Parks & Recreation; Capital Delivery Services', 'Climate information for development standards: freeboard, stormwater design storms and landscaping.'],
+    ['climate', 'Scenario Planning', 'Researching scenario-planning methods to address uncertainties in infrastructure management and community health.', 'Energy; Climate Action & Resilience; Parks & Recreation; Building Services', 'Growth and climate scenarios to stress-test the comprehensive plan and infrastructure.'],
+    ['hazard', 'Wildfire Planning', 'Researching the advantages and benefits of existing forecasts when working with Austin Fire and Emergency Management.', 'Fire', 'How existing flood, heat and fire-weather forecasts can serve local emergency and planning decisions.'],
+    ['heat', 'Community Heat Impacts', 'Researching how cooling corridors affect people’s experience of extreme heat.', 'Climate Action & Resilience; Parks & Recreation; Public Health; Transportation & Public Works', 'Shaded walking and biking routes linking neighborhoods, parks, WKU and downtown.']
+  ];
+  var TH = { climate: 'Climate and planning', heat: 'Heat', hazard: 'Flood, trees and fire', built: 'Buildings and digital tools' };
+  var box = document.getElementById('projects');
+  P.forEach(function (q) {
+    var c = document.createElement('article'); c.className = 'proj'; c.dataset.t = q[0];
+    var t = document.createElement('div'); t.className = 'tag'; t.textContent = TH[q[0]]; c.appendChild(t);
+    var h = document.createElement('h3'); h.textContent = q[1]; c.appendChild(h);
+    var d = document.createElement('p'); d.textContent = q[2]; c.appendChild(d);
+    var g = document.createElement('div'); g.className = 'depts'; q[3].split('; ').forEach(function (n) { var s = document.createElement('span'); s.textContent = n; g.appendChild(s); }); c.appendChild(g);
+    var w = document.createElement('p'); w.className = 'here'; var b = document.createElement('b'); b.textContent = 'In Warren County'; w.appendChild(b); w.appendChild(document.createTextNode(q[4])); c.appendChild(w);
+    box.appendChild(c);
+  });
+  document.querySelectorAll('.filters button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.filters button').forEach(function (o) { o.setAttribute('aria-pressed', String(o === btn)); });
+      box.querySelectorAll('.proj').forEach(function (c) { c.hidden = !(btn.dataset.f === 'all' || c.dataset.t === btn.dataset.f); });
+    });
+  });
+})();
+</script>
+</body>
+</html>
